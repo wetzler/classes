@@ -11,7 +11,15 @@
         font-family: sans-serif;
         font-family: Helvetica;
         margin:50px;
-      }
+      };
+      
+      #8 {
+        float:left;
+      };
+      
+      #9 {
+        float:right;
+      };
 
   </style>
 
@@ -190,7 +198,30 @@
     // <!-- Code to get data for Keen charts -->   
     
     Keen.onChartsReady(function(){
-        //Create a Metric for the number of logins each user has performed in the last 7 days.
+        //Create a Metric for the number of events in hottie_selections collection
+        var hottieEvents = new Keen.Metric("hottie_selections", {
+            analysisType: "count",
+        });
+        
+        
+        //Draw that Metric
+        hottieEvents.draw(document.getElementById("1"), {
+            label: "Total Events",
+        });
+        
+        //Create a Metric for the number of unique users submitting hotties
+        var uniqueNames = new Keen.Metric("hottie_selections", {
+            analysisType: "count_unique",
+            targetProperty: "name"
+        });
+        
+        
+        //Draw that Metric
+        uniqueNames.draw(document.getElementById("2"), {
+            label: "Unique Names",
+        });
+        
+        //Create a Metric for the number of hunks grouped by hunk choice
         var hottieCount = new Keen.Metric("hottie_selections", {
             analysisType: "count",
             groupBy: "hunk"
@@ -206,31 +237,69 @@
         });
         
         //Draw the visualization into a div
-        hottiePie.draw(document.getElementById("1"));
+        hottiePie.draw(document.getElementById("3"));
         
-        //Create a Metric for the number of logins each user has performed in the last 7 days.
-        var ratingAverage = new Keen.Metric("class_ratings", {
+        //Create a Metric for the average rating for the class
+        var averageRating = new Keen.Metric("class_ratings", {
             analysisType: "average",
-            targetProperty: "rating.value",
-            groupBy: "hunk"
+            targetProperty: "rating.value"
         });
         
-        var ratingGrouped = new Keen.Metric("class_ratings", {
+        
+        //Draw that Metric
+        averageRating.draw(document.getElementById("4"), {
+            label: "Average Rating",
+        });
+        
+        //Create a Metric for the average rating by users who selected Zack
+        var zackAverage = new Keen.Metric("class_ratings", {
+            analysisType: "average",
+            targetProperty: "rating.value",
+            filters: [{
+                "property_name" : "user.hunk",
+                "operator" : "eq",
+                "property_value" : "zack"
+            }]
+        });
+        
+        //Draw that Metric
+        zackAverage.draw(document.getElementById("8"), {
+            label: "Zach Fans Average Rating",
+        });
+        
+        //Create a Metric for the average rating by users who selected Slater
+        var slaterAverage = new Keen.Metric("class_ratings", {
+            analysisType: "average",
+            targetProperty: "rating.value",
+            filters: [{
+                "property_name" : "user.hunk",
+                "operator" : "eq",
+                "property_value" : "slater"
+            }]
+        });
+        
+        //Draw that Metric
+        slaterAverage.draw(document.getElementById("9"), {
+            label: "Slater Fans Average Rating",
+        });
+        
+        var browserGrouped = new Keen.Metric("hottie_selections", {
             analysisType: "count",
-            groupBy: "rating.value"
+            groupBy: "browser.name"
         });
         
         //Create a PieChart visualization for that Metric.
-        var myPieChart = new Keen.PieChart(ratingGrouped, {
+        var browserPieChart = new Keen.PieChart(browserGrouped, {
             height: 300,
             width: 600,
-            title: "Class Ratings",
+            title: "Browsers",
             minimumSlicePercentage: 1,
             colors:["#FF6699","#33CCCC","#003366","#FFCC33","#009966"]
         });
         
         //Draw the visualization into a div
-        myPieChart.draw(document.getElementById("2"));
+        browserPieChart.draw(document.getElementById("7"));
+        
 
     });
     
@@ -258,10 +327,22 @@
    
  </head>
  <body>
-  <h1>Analysis</h1>
+  <h1>Analysis!</h1>
 
+<p>How many events are in the hottie_selections collection?</p>
 <div id="1"></div>
+<p>How many unique users submitted hottie selections?</p>
 <div id="2"></div>
+<p>Who was more popular: Zack or Slater?</p>
+<div id="3"></div>
+<p>What was the average rating for the course?</p>
+<div id="4"></div>
+<p>What browser was the most popular in the class?</p>
+<div id="7"></div>
+<p>Did people who liked Slater rate the class higher or lower than people who like Zack?</p>
+<div id="8"></div><div id="9"></div></p>
+
+
 
 
   

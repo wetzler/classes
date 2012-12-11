@@ -174,12 +174,16 @@
         
         var choice = {
             rating: {
-                value: rating,            
+                value: parseInt(rating),            
             },
             browser: {
                 name: BrowserDetect.browser,
                 version: BrowserDetect.version,
                 OS: BrowserDetect.OS
+            },
+            user: {
+                name: urlParams["name"],
+                hunk: urlParams["hunk"]
             }
         };
 
