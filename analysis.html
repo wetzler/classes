@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Important Survey</title>
+  
+  
+  <style>
+
+      body {
+        font-family: sans-serif;
+        font-family: Helvetica;
+      }
+
+  </style>
+
+
+
+  <!-- Code to configure Keen IO -->
+
+  <script type="text/javascript" src="https://keen_web_static.s3.amazonaws.com/code/keen-1.1.0.js"></script>
+   
+  <!-- Google JS library -->
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    
+  <!-- Google library loader --> 
+  <script type="text/javascript">
+      google.load("jquery", "1.4.2");
+  </script>
+  
+  <script>
+  // <!-- Keen IO Client Configurations -->     
+  Keen.configure("4fd6a054163d665aab000000", "cc548e247ee64394ae6f59137ef5dd88");
+
+
+  <!-- Code to detect browser info -->
+
+    var BrowserDetect = {
+    	init: function () {
+    		this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
+    		this.version = this.searchVersion(navigator.userAgent)
+    			|| this.searchVersion(navigator.appVersion)
+    			|| "an unknown version";
+    		this.OS = this.searchString(this.dataOS) || "an unknown OS";
+    	},
+    	searchString: function (data) {
+    		for (var i=0;i<data.length;i++)	{
+    			var dataString = data[i].string;
+    			var dataProp = data[i].prop;
+    			this.versionSearchString = data[i].versionSearch || data[i].identity;
+    			if (dataString) {
+    				if (dataString.indexOf(data[i].subString) != -1)
+    					return data[i].identity;
+    			}
+    			else if (dataProp)
+    				return data[i].identity;
+    		}
+    	},
+    	searchVersion: function (dataString) {
+    		var index = dataString.indexOf(this.versionSearchString);
+    		if (index == -1) return;
+    		return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
+    	},
+    	dataBrowser: [
+    		{
+    			string: navigator.userAgent,
+    			subString: "Chrome",
+    			identity: "Chrome"
+    		},
+    		{ 	string: navigator.userAgent,
+    			subString: "OmniWeb",
+    			versionSearch: "OmniWeb/",
+    			identity: "OmniWeb"
+    		},
+    		{
+    			string: navigator.vendor,
+    			subString: "Apple",
+    			identity: "Safari",
+    			versionSearch: "Version"
+    		},
+    		{
+    			prop: window.opera,
+    			identity: "Opera",
+    			versionSearch: "Version"
+    		},
+    		{
+    			string: navigator.vendor,
+    			subString: "iCab",
+    			identity: "iCab"
+    		},
+    		{
+    			string: navigator.vendor,
+    			subString: "KDE",
+    			identity: "Konqueror"
+    		},
+    		{
+    			string: navigator.userAgent,
+    			subString: "Firefox",
+    			identity: "Firefox"
+    		},
+    		{
+    			string: navigator.vendor,
+    			subString: "Camino",
+    			identity: "Camino"
+    		},
+    		{		// for newer Netscapes (6+)
+    			string: navigator.userAgent,
+    			subString: "Netscape",
+    			identity: "Netscape"
+    		},
+    		{
+    			string: navigator.userAgent,
+    			subString: "MSIE",
+    			identity: "Explorer",
+    			versionSearch: "MSIE"
+    		},
+    		{
+    			string: navigator.userAgent,
+    			subString: "Gecko",
+    			identity: "Mozilla",
+    			versionSearch: "rv"
+    		},
+    		{ 		// for older Netscapes (4-)
+    			string: navigator.userAgent,
+    			subString: "Mozilla",
+    			identity: "Netscape",
+    			versionSearch: "Mozilla"
+    		}
+    	],
+    	dataOS : [
+    		{
+    			string: navigator.platform,
+    			subString: "Win",
+    			identity: "Windows"
+    		},
+    		{
+    			string: navigator.platform,
+    			subString: "Mac",
+    			identity: "Mac"
+    		},
+    		{
+    			   string: navigator.userAgent,
+    			   subString: "iPhone",
+    			   identity: "iPhone/iPod"
+    	    },
+    		{
+    			string: navigator.platform,
+    			subString: "Linux",
+    			identity: "Linux"
+    		}
+    	]
+
+    };
+    BrowserDetect.init();
+
+
+    // <!-- Code to prepare analytics data and send it to Keen IO -->
+
+    var recordEvent = function () {
+        // create an event as a JS object
+
+        var landing = {
+            browser: {
+                name: BrowserDetect.browser,
+                version: BrowserDetect.version,
+                OS: BrowserDetect.OS
+            }
+        };
+        
+        console.log(landing);
+          
+        // add it to a Keen IO collection
+        Keen.addEvent("analysis_landing", landing,
+        function () {
+        },
+        function (e) {
+                 alert('no event sent to keen :(');
+        });
+        
+    };
+    
+    // <!-- Code to do stuff when the document is ready -->    
+
+      $(document).ready(function(){
+          recordEvent();
+      });
+
+      
+    // <!-- Code to get data for Keen charts -->   
+    
+    Keen.onChartsReady(function(){
+        //Create a Metric for the number of logins each user has performed in the last 7 days.
+        var hottieCount = new Keen.Metric("hottie_selections", {
+            analysisType: "count",
+            groupBy: "hunk"
+        });
+        
+        //Create a PieChart visualization for that Metric.
+        var hottiePie = new Keen.PieChart(hottieCount, {
+            height: 300,
+            width: 600,
+            title: "Hunk Distribution",
+            minimumSlicePercentage: 1,
+            colors:["#FF6699","#33CCCC","#003366","#FFCC33"]
+        });
+        
+        //Draw the visualization into a div
+        hottiePie.draw(document.getElementById("1"));
+        
+        //Create a Metric for the number of logins each user has performed in the last 7 days.
+        var ratingAverage = new Keen.Metric("class_ratings", {
+            analysisType: "average",
+            targetProperty: "rating.value",
+            groupBy: "hunk"
+        });
+        
+        var ratingGrouped = new Keen.Metric("class_ratings", {
+            analysisType: "count",
+            groupBy: "rating.value"
+        });
+        
+        //Create a PieChart visualization for that Metric.
+        var myPieChart = new Keen.PieChart(ratingGrouped, {
+            height: 300,
+            width: 600,
+            title: "Class Ratings",
+            minimumSlicePercentage: 1,
+            colors:["#FF6699","#33CCCC","#003366","#FFCC33","#009966"]
+        });
+        
+        //Draw the visualization into a div
+        myPieChart.draw(document.getElementById("2"));
+
+    });
+    
+    // Keen.onChartsReady(function() {
+    //         
+    //     var myMetric = new Keen.Metric("hottie_selections", {
+    //         analysisType: "count"
+    //         groupBy: "hunk"
+    //     });
+    //     
+    //     
+    //     var myNumberVisualization = new Keen.Number(myMetric, {
+    //         height: "300px",
+    //         width: "600px",
+    //         label: "total hunks"
+    //     });
+    //     
+    //     //Draw the visualization in a div
+    //     myNumberVisualization.draw(document.getElementById("1"));
+    // });        
+    //     
+
+    
+   </script>
+   
+ </head>
+ <body>
+  <h1>Analysis</h1>
+
+<div id="1"></div>
+<div id="2"></div>
+
+
+  
+ </body>
+</html>
