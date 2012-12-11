@@ -12,14 +12,6 @@
         font-family: Helvetica;
         margin:50px;
       };
-      
-      #8 {
-        float:left;
-      };
-      
-      #9 {
-        float:right;
-      };
 
   </style>
 
@@ -205,7 +197,7 @@
         
         
         //Draw that Metric
-        hottieEvents.draw(document.getElementById("1"), {
+        hottieEvents.draw(document.getElementById("events"), {
             label: "Total Events",
         });
         
@@ -217,7 +209,7 @@
         
         
         //Draw that Metric
-        uniqueNames.draw(document.getElementById("2"), {
+        uniqueNames.draw(document.getElementById("uniqueNames"), {
             label: "Unique Names",
         });
         
@@ -263,7 +255,7 @@
         });
         
         //Draw that Metric
-        zackAverage.draw(document.getElementById("8"), {
+        zackAverage.draw(document.getElementById("zachavg"), {
             label: "Zach Fans Average Rating",
         });
         
@@ -279,7 +271,7 @@
         });
         
         //Draw that Metric
-        slaterAverage.draw(document.getElementById("9"), {
+        slaterAverage.draw(document.getElementById("slateravg"), {
             label: "Slater Fans Average Rating",
         });
         
@@ -298,30 +290,11 @@
         });
         
         //Draw the visualization into a div
-        browserPieChart.draw(document.getElementById("7"));
+        browserPieChart.draw(document.getElementById("browserPie"));
         
 
     });
     
-    // Keen.onChartsReady(function() {
-    //         
-    //     var myMetric = new Keen.Metric("hottie_selections", {
-    //         analysisType: "count"
-    //         groupBy: "hunk"
-    //     });
-    //     
-    //     
-    //     var myNumberVisualization = new Keen.Number(myMetric, {
-    //         height: "300px",
-    //         width: "600px",
-    //         label: "total hunks"
-    //     });
-    //     
-    //     //Draw the visualization in a div
-    //     myNumberVisualization.draw(document.getElementById("1"));
-    // });        
-    //     
-
     
    </script>
    
@@ -330,19 +303,24 @@
   <h1>Analysis!</h1>
 
 <p>How many events are in the hottie_selections collection?</p>
-<div id="1"></div>
+<div id="events"></div>
 <p>How many unique users submitted hottie selections?</p>
-<div id="2"></div>
+<div id="uniqueNames"></div>
 <p>Who was more popular: Zack or Slater?</p>
 <div id="3"></div>
 <p>What was the average rating for the course?</p>
 <div id="4"></div>
 <p>What browser was the most popular in the class?</p>
-<div id="7"></div>
+<div id="browserPie"></div>
 <p>Did people who liked Slater rate the class higher or lower than people who like Zack?</p>
-<div id="8"></div><div id="9"></div></p>
+<!-- <div id="zachavg"></div><div id="slateravg"></div> -->
 
-
+<table border="0" margin="10px">
+<tr>
+<td><div id="zachavg"></div></td>
+<td><div id="slateravg"></td>
+</tr>
+</table>
 
 
   
