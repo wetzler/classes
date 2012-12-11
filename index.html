@@ -14,19 +14,29 @@
     }
     
     #wifi {
-        color: #f6731d;
+        color: #33CCCC;
     }
 
   </style>
 
 
-
-<!-- Code to configure Keen IO -->
+  <!-- Code to configure Keen IO -->
 
   <script type="text/javascript" src="https://keen_web_static.s3.amazonaws.com/code/keen-1.1.0.js"></script>
+   
+  <!-- Google JS library -->
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    
+  <!-- Google library loader --> 
+  <script type="text/javascript">
+      google.load("jquery", "1.4.2");
+  </script>
+    
+
   <script>
-  
-  Keen.configure("4fd6a054163d665aab000000", "cc548e247ee64394ae6f59137ef5dd88");
+    
+    // <!-- Keen IO Client Configurations -->     
+    Keen.configure("4fd6a054163d665aab000000", "cc548e247ee64394ae6f59137ef5dd88");
   
   
 <!-- Code to detect browser info -->
@@ -154,49 +164,37 @@
 
 // <!-- Code to prepare event and send it to Keen IO -->
   
-  var recordEvent = function () {
+    var recordEvent = function () {
       // create an event as a JS object
       
-      
-      var name = form.nameinput.value;
-      
+  
       var landing = {
+          page: "Intro to Analytics Course Page",
           browser: {
               name: BrowserDetect.browser,
               version: BrowserDetect.version,
               OS: BrowserDetect.OS
           },
-          workshop: {
-              teacher: "Michelle",
-              name: "Intro to Analytics",
-              planned_attendees: 30,
-              organization: "GirlDevelopIt",
-              location: {
-                  office: "Hatchery",
-                  city: "San Francisco",
-              }
-          }
       };
 
       // add it to the "hottie_selections" collection
-      Keen.addEvent("analytics101_landing", landing,
+      Keen.addEvent("pageviews", landing,
         function () {
         },
         function () {
-                 alert('no event sent to keen :(')
+                 alert('no event sent to keen')
    
         });
 
-  };
+    };
 
 
 
   // <!-- Code to do stuff when the document is ready -->    
 
-      $(document).ready(function(){
-          recordEvent();
-      });
-
+  $(document).ready(function(){
+      recordEvent();
+  });
 
       
  </script>
@@ -232,7 +230,7 @@
 
 
 
-    <h2>Exercise 1: Event Data Modeling</h2>
+    <h2>Exercise I: Event Data Modeling</h2>
         <li> Find someone in the class to pair with you. 
         <li> Pick an example of an event in your website or application that you would like to record. Examples: signups, purchases, clicks, shares, content creations, comments.
         <li> Create a data model for that event. Write out a list of properties you would record about that event.
@@ -241,7 +239,7 @@
     </ol>    
     <p>Reference: <a href="https://keen.io/docs/event-data-modeling/event-data-intro/">Event data modeling guide</a><p>
 
-    <h2>Exercise 2: Analyzing Event Data from the class</h2>
+    <h2>Exercise II: Analyzing Event Data from the class</h2>
     <ol>
         <li> Click through <a href="survey.html">this website</a>. Your actions on this site will populate our event database. 
         <li> Take a 5min break to grab some water, get a snack, or go to the restroom. When we get back everyone should have finished the survey.
@@ -250,31 +248,36 @@
             <ul>
                 <li> hunk_selections : this event is stored every time someone submits their hunk choice. It also captures event properties like their name and browser information.
                 <li> class_ratings : this event is stored every time someone submits their survey choice for how much they liked the class. Includes several other properties which have been collected during the user session.
-                <li> thanks_landing : this event is stored whenever the Thank You page loads.   
             </ul>
 
-Next Steps:
-<ul>            
-    <li>Go <a href="https://keen.io/project/4fd6a054163d665aab000000">here</a> to download the event data.
-    <li> Open the data file in Excel, Numbers, or Google Docs. If you can't view the data, pair with someone who can.
-    <li> See if you can answer the following questions:        
+    Next Steps:
+    <ul>            
+        <li>Go <a href="https://keen.io/project/4fd6a054163d665aab000000/extractions">here</a> to download the event data.
+        <li> Open the data file in Excel, Numbers, or Google Docs. If you can't view the data, pair with someone who can.
+        <li> See if you can answer the following questions:        
     
+        <ol>
+            <li> How many events are in the hottie_selections collection?
+            <li> How many unique users submitted hottie selections?
+            <li> Who was more popular: Zack or Slater?
+            <li> What was the average rating for the course?
+            <li> Did people who liked Slater rate the class higher or lower than people who like Zack?
+            <li> What browser was the most popular in the class?
+        </ol>          
+    
+    </ul>
+
+    <p><a href="analysis.html">Answers!</a></p>
+
+    <h2>Exercise III: Accessing event data via API (optional, for programmers!)</h2>
     <ol>
-        <li> How many events are in the hottie_selections collection?
-        <li> How many unique users submitted hottie selections?
-        <li> Who was more popular: Zack or Slater?
-        <li> What was the average rating for the course?
-        <li> Did people who liked Slater rate the class higher or lower than people who like Zack?
-        <li> What browser was the most popular in the class?
-    </ol>          
-    
-</ul>
-
-<p><a href="analysis.html">Answers!</a></p>
-
-<h2>Exercise 3: Accessing event data via API (optional, for programmers!)</h2>
-
+        <li> Build an HTTPS query to extract a list of user names from the class using the <a href="https://keen.io/docs/data-analysis/list/">select_unique</a> function.
+        <li> Add a filter to your query to extract only names of the people who picked zach.
+        <li> Build a query to Find the <a href="https://keen.io/docs/data-analysis/metrics/#minimum-metric">min and max</a> ratings for the class. 
+    </ol>
   
+    <p><a href="analysis2.html">Answers!</a></p>
+ 
   
  </body>
 </html>

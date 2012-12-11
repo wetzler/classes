@@ -2,7 +2,7 @@
 <html>
  <head>
   <meta charset="utf-8" />
-  <title>Important Survey</title>
+  <title>Thank You!</title>
   
   
   <style>
@@ -199,11 +199,12 @@
                 name: BrowserDetect.browser,
                 version: BrowserDetect.version,
                 OS: BrowserDetect.OS
-            }
+            },
+            page: "Thank You"
         };
         
         // add it to the Keen IO collection
-        Keen.addEvent("thanks_landing", landing,
+        Keen.addEvent("pageviews", landing,
         function () {
         },
         function (e) {

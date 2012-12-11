@@ -161,6 +161,7 @@
         // create an event as a JS object
 
         var landing = {
+            page: "Exercise 2 Answers",
             browser: {
                 name: BrowserDetect.browser,
                 version: BrowserDetect.version,
@@ -171,11 +172,11 @@
         console.log(landing);
           
         // add it to a Keen IO collection
-        Keen.addEvent("analysis_landing", landing,
+        Keen.addEvent("pageviews", landing,
         function () {
         },
         function (e) {
-                 alert('no event sent to keen :(');
+                 alert('no event sent to keen');
         });
         
     };
@@ -255,8 +256,8 @@
         });
         
         //Draw that Metric
-        zackAverage.draw(document.getElementById("zachavg"), {
-            label: "Zach Fans Average Rating",
+        zackAverage.draw(document.getElementById("zackavg"), {
+            label: "Zack Fans Average Rating",
         });
         
         //Create a Metric for the average rating by users who selected Slater
@@ -313,15 +314,14 @@
 <p>What browser was the most popular in the class?</p>
 <div id="browserPie"></div>
 <p>Did people who liked Slater rate the class higher or lower than people who like Zack?</p>
-<!-- <div id="zachavg"></div><div id="slateravg"></div> -->
+<!-- <div id="zackavg"></div><div id="slateravg"></div> -->
 
 <table border="0" margin="10px">
 <tr>
-<td><div id="zachavg"></div></td>
+<td><div id="zackavg"></div></td>
 <td><div id="slateravg"></td>
 </tr>
 </table>
-
 
   
  </body>

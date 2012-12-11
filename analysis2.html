@@ -11,7 +11,7 @@
         font-family: sans-serif;
         font-family: Helvetica;
         margin:50px;
-      }
+      };
 
   </style>
 
@@ -19,9 +19,19 @@
 
   <!-- Code to configure Keen IO -->
 
-    <script type="text/javascript" src="https://keen_web_static.s3.amazonaws.com/code/keen-1.1.0.js"></script>
-    <script>
-    Keen.configure("4fd6a054163d665aab000000", "cc548e247ee64394ae6f59137ef5dd88");
+  <script type="text/javascript" src="https://keen_web_static.s3.amazonaws.com/code/keen-1.1.0.js"></script>
+   
+  <!-- Google JS library -->
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    
+  <!-- Google library loader --> 
+  <script type="text/javascript">
+      google.load("jquery", "1.4.2");
+  </script>
+  
+  <script>
+  // <!-- Keen IO Client Configurations -->     
+  Keen.configure("4fd6a054163d665aab000000", "cc548e247ee64394ae6f59137ef5dd88");
 
 
   <!-- Code to detect browser info -->
@@ -144,122 +154,65 @@
     };
     BrowserDetect.init();
 
-    // function to capture query string parmaters
-        
-    var urlParams = {};
-    (function () {
-        var match,
-            pl     = /\+/g,  // Regex for replacing addition symbol with a space
-            search = /([^&=]+)=?([^&]*)/g,
-            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-            query  = window.location.search.substring(1);
-
-        while (match = search.exec(query))
-           urlParams[decode(match[1])] = decode(match[2]);
-    })();
 
     // <!-- Code to prepare analytics data and send it to Keen IO -->
 
-    var recordEvent = function (form) {
+    var recordEvent = function () {
         // create an event as a JS object
 
-        var radios = document.getElementsByName('rating');
-        var rating = 0;
-
-        for (var i = 0, length = radios.length; i < length; i++) {
-            if (radios[i].checked) {
-                var rating = radios[i].id;
-            }
-        }
-        
-        var choice = {
-            page: "Class Rating",
-            rating: {
-                value: parseInt(rating),            
-            },
+        var landing = {
+            page: "Exercise 3 Answers",
             browser: {
                 name: BrowserDetect.browser,
                 version: BrowserDetect.version,
                 OS: BrowserDetect.OS
-            },
-            user: {
-                name: urlParams["name"],
-                hunk: urlParams["hunk"]
             }
         };
-
-        console.log(choice)
         
-        // add it to the "hottie_selections" collection
-        Keen.addEvent("class_ratings", choice,
+          
+        // add it to a Keen IO collection
+        Keen.addEvent("pageviews", landing,
         function () {
-                 nextpage()
         },
         function (e) {
-                 alert('no event sent to keen :(')
+                 alert('no event sent to keen');
         });
-
+        
     };
-
     
-    var nextPageName = "conclusion.html"
+    // <!-- Code to do stuff when the document is ready -->    
 
-    var urlString = nextPageName + "?hunk=" + urlParams["hunk"] + "&name=" + urlParams["name"];
-
-    var nextpage = function () {window.location=urlString}
-
+      $(document).ready(function(){
+          recordEvent();
+      });
+    
+    
    </script>
+   
  </head>
  <body>
-  <h1>Awesome.</h1>
+  <p><h1>Exercise 3 Answers</h1><p>
 
-
-  <form action="survey2.html" 
-    method="get">
+ 
+  <p>Build an HTTPS query to extract a list of user names from the class using the select_unique function.</p>
     
-    <img id="zach" src="http://meyerweb.com/bkkt/cat-train.gif">
+        <ul>
+            <li> All names query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/select_unique?<span style="color:#33CCCC">event_collection=hottie_selections</span>&<span style="color:#009966">target_property=name</span>&api_key=cc548e247ee64394ae6f59137ef5dd88<br>
+        </ul>
+
+    <p>Add a filter to your query to extract only names of the people who picked zack.
+        
+        <ul>
+            <li> People who picked Zack query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/select_unique?<span style="color:#33CCCC">event_collection=hottie_selections</span>&<span style="color:#009966">target_property=name</span>&api_key=cc548e247ee64394ae6f59137ef5dd88&filters=%5B%7B%22property_name%22%3A%22hunk%22%2C%22operator%22%3A%22eq%22%2C%22property_value%22%3A%22zack%22%7D%5D<br>
+        </ul>        
     
-    <br>
-
-    <!-- <h2>How would you rate this class?</h2>
-    <input type="radio" name="rating" id="0" value="0"> <label for="0">0 - Michelle is the worst and should not teach classes</label><br>
-    <input type="radio" name="rating" id="1" value="1"> <label for="1">1 - Not a good use of time</label><br>
-    <input type="radio" name="rating" id="2" value="2"> <label for="2">2 - Meh</label><br>
-    <input type="radio" name="rating" id="3" value="3"> <label for="3">3 - Some helpful content</label><br>
-    <input type="radio" name="rating" id="4" value="4"> <label for="4">4 - Good</label><br>
-    <input type="radio" name="rating" id="5" value="5"> <label for="5">5 - Great! (Would recommend to others)</label><br> -->
+    <p>Build a query to find the min and max ratings for the class.</p>
+        
+        <ul>
+            <li> Min Query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/<span style="color:#33CCCC">minimum</span>?event_collection=class_ratings&target_property=rating.value&api_key=cc548e247ee64394ae6f59137ef5dd88
+            <li> Max Query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/<span style="color:#33CCCC">maximum</span>?event_collection=class_ratings&target_property=rating.value&api_key=cc548e247ee64394ae6f59137ef5dd88
     
-    <h3>How do you rate this class?</h3>
-     <input type="radio" name="rating" id="0" value="0">
-     <label for="0">0 - Michelle is the worst and should not teach classes</label><br>
-     <input type="radio" name="rating" id="1" value="1">
-     <label for="1">1 - Not a good use of time</label><br>
-     <input type="radio" name="rating" id="2" value="2">
-     <label for="2">2 - Meh</label><br>
-     <input type="radio" name="rating" id="3" value="3">
-     <label for="3">3 - Some helpful content</label><br>
-     <input type="radio" name="rating" id="4" value="4">
-     <label for="4">4 - Good</label><br>
-     <input type="radio" name="rating" id="5" value="5">
-     <label for="5">5 - Great! (Would recommend to others)</label><br>
-
-    <br>
-    <br>
     
-    <INPUT TYPE="button" NAME="button" Value="Cool" onClick="recordEvent(this.form)">
-
-  </form>
-    
-  
-  <script>
-
-  	function showData() {
-  		alert(document.formone.inputone.value);
-  	}
-
-  </script>
-  
-
   
  </body>
 </html>
