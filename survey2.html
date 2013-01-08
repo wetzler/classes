@@ -11,7 +11,7 @@
         font-family: sans-serif;
         font-family: Helvetica;
         margin:50px;
-      }
+
 
   </style>
 
@@ -173,18 +173,22 @@
         }
         
         var choice = {
+
             page: "Class Rating",
             rating: {
                 value: parseInt(rating),            
+
             },
             browser: {
                 name: BrowserDetect.browser,
                 version: BrowserDetect.version,
                 OS: BrowserDetect.OS
+
             },
             user: {
                 name: urlParams["name"],
                 hunk: urlParams["hunk"]
+
             }
         };
 

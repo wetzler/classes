@@ -3,6 +3,7 @@
  <head>
   <meta charset="utf-8" />
   <title>Thank You!</title>
+
   
   
   <style>
@@ -199,12 +200,11 @@
                 name: BrowserDetect.browser,
                 version: BrowserDetect.version,
                 OS: BrowserDetect.OS
-            },
-            page: "Thank You"
+            }
         };
         
         // add it to the Keen IO collection
-        Keen.addEvent("pageviews", landing,
+        Keen.addEvent("thanks_landing", landing,
         function () {
         },
         function (e) {
@@ -229,6 +229,7 @@
     <img id="limedog" src="http://i.imgur.com/u3tHo.gif">
     <br>
     <p>back to <a href="index.html">course page</a></p>
+
   
  </body>
 </html>
