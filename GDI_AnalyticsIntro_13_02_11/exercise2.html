@@ -162,7 +162,7 @@
       
   
       var landing = {
-          page: "Intro to Analytics Course Page",
+          page: "Exercise 1",
           browser: {
               name: BrowserDetect.browser,
               version: BrowserDetect.version,
@@ -197,31 +197,39 @@
 
 
  <body>
-     <img src="http://www.twilio.com/blog/wp-content/uploads/2011/09/42884_1292249791_1_1_1_1_logo.jpg"></img>
-     <img src="http://www.hatcherysf.com/images/hatchery_logo_red.png"></img>     
-  <h1> Welcome to Introduction to Analytics Class!</h1>
-
-    <p><h2>Info</h2></p>
-
-    <ul>
-    <li>Download Course materials here!  <a href="Intro%20to%20Analytics.key">keynote</a> | <a href="Intro%20to%20Analytics.pdf">pdf</a>
-    <li> Twitter: <a href="https://twitter.com/michellewetzler" target="_blank">@michellewetzler</a>, <a href="https://twitter.com/girldevelopit" target="_blank">@girldevelopit</a>
-    </ul>
     
+    <h2>Exercise II: Analyzing Event Data from the class</h2>
+    <ol>
+        <li> Click through <a href="survey.html" target="_blank">this website</a>. Your actions on this site will populate our event database. 
+        <li> Take a 5min break to grab some water, get a snack, or go to the restroom. When we get back everyone should have finished the survey.
+    </ol>
+    The event data for the survey site is organized into these collections:
+            <ul>
+                <li> hunk_selections : this event is stored every time someone submits their hunk choice. It also captures event properties like their name and browser information.
+                <li> class_ratings : this event is stored every time someone submits their survey choice for how much they liked the class. Includes several other properties which have been collected during the user session.
+            </ul>
 
-    <h2>Agenda:</h2>
-    <ul>
-        <li>Analytics & Big Data Overview
-        <li>Analytics for your app
-        <li><a href="exercise1.html">Exercise 1</a> 
-        <li>Break!
-        <li>Analytics for marketing
-        <li><a href="exercise2.html">Exercise 2</a>
-        <li><a href="exercise3.html">Bonus Exercise</a>    
+    Next Steps:
+    <ul>            
+        <li>Go <a href="https://keen.io/project/4fd6a054163d665aab000000/extractions" target="_blank">here</a> to download the event data.
+        <li> Open the data file in Excel, Numbers, or Google Docs. If you can't view the data, pair with someone who can.
+        <li> See if you can answer the following questions:        
+
+        <ol>
+            <li> How many events are in the hottie_selections collection?
+            <li> How many unique users submitted hottie selections?
+            <li> Who was more popular: Slater or Zack?
+            <li> What was the average rating for the course?
+            <li> Did people who liked Slater rate the class higher or lower than people who like Zack?
+            <li> What browser was the most popular in the class?
+        </ol>          
+
     </ul>
 
+    <p><a href="analysis.html" target="_blank">Answers!</a></p>
 
- 
+    <a href="index.html"><-- Back to Course Page</a>
+
   
  </body>
 </html>

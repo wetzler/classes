@@ -1,0 +1,10 @@
+body {
+  font-family: sans-serif;
+  font-family: Helvetica;
+  margin:50px;
+};
+
+a:link {color:#527483;}      /* unvisited link */
+a:visited {color:#a1bd68;}  /* visited link */
+a:hover {color:#54af62;}  /* mouse over link */
+a:active {color:#85db24;}  /* selected link */
