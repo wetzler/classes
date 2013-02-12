@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Important Survey</title>
+  
+  
+  <style>
+
+      body {
+        font-family: sans-serif;
+        font-family: Helvetica;
+        margin:50px;
+      };
+
+  </style>
+
+
+
+  <!-- Code to configure Keen IO -->
+
+  <script type="text/javascript" src="https://keen_web_static.s3.amazonaws.com/code/keen-1.1.0.js"></script>
+   
+  <!-- Google JS library -->
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    
+  <!-- Google library loader --> 
+  <script type="text/javascript">
+      google.load("jquery", "1.4.2");
+  </script>
+  
+  <script>
+  // <!-- Keen IO Client Configurations -->     
+  Keen.configure("4fd6a054163d665aab000000", "cc548e247ee64394ae6f59137ef5dd88");
+
+
+  <!-- Code to detect browser info -->
+
+    var BrowserDetect = {
+    	init: function () {
+    		this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
+    		this.version = this.searchVersion(navigator.userAgent)
+    			|| this.searchVersion(navigator.appVersion)
+    			|| "an unknown version";
+    		this.OS = this.searchString(this.dataOS) || "an unknown OS";
+    	},
+    	searchString: function (data) {
+    		for (var i=0;i<data.length;i++)	{
+    			var dataString = data[i].string;
+    			var dataProp = data[i].prop;
+    			this.versionSearchString = data[i].versionSearch || data[i].identity;
+    			if (dataString) {
+    				if (dataString.indexOf(data[i].subString) != -1)
+    					return data[i].identity;
+    			}
+    			else if (dataProp)
+    				return data[i].identity;
+    		}
+    	},
+    	searchVersion: function (dataString) {
+    		var index = dataString.indexOf(this.versionSearchString);
+    		if (index == -1) return;
+    		return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
+    	},
+    	dataBrowser: [
+    		{
+    			string: navigator.userAgent,
+    			subString: "Chrome",
+    			identity: "Chrome"
+    		},
+    		{ 	string: navigator.userAgent,
+    			subString: "OmniWeb",
+    			versionSearch: "OmniWeb/",
+    			identity: "OmniWeb"
+    		},
+    		{
+    			string: navigator.vendor,
+    			subString: "Apple",
+    			identity: "Safari",
+    			versionSearch: "Version"
+    		},
+    		{
+    			prop: window.opera,
+    			identity: "Opera",
+    			versionSearch: "Version"
+    		},
+    		{
+    			string: navigator.vendor,
+    			subString: "iCab",
+    			identity: "iCab"
+    		},
+    		{
+    			string: navigator.vendor,
+    			subString: "KDE",
+    			identity: "Konqueror"
+    		},
+    		{
+    			string: navigator.userAgent,
+    			subString: "Firefox",
+    			identity: "Firefox"
+    		},
+    		{
+    			string: navigator.vendor,
+    			subString: "Camino",
+    			identity: "Camino"
+    		},
+    		{		// for newer Netscapes (6+)
+    			string: navigator.userAgent,
+    			subString: "Netscape",
+    			identity: "Netscape"
+    		},
+    		{
+    			string: navigator.userAgent,
+    			subString: "MSIE",
+    			identity: "Explorer",
+    			versionSearch: "MSIE"
+    		},
+    		{
+    			string: navigator.userAgent,
+    			subString: "Gecko",
+    			identity: "Mozilla",
+    			versionSearch: "rv"
+    		},
+    		{ 		// for older Netscapes (4-)
+    			string: navigator.userAgent,
+    			subString: "Mozilla",
+    			identity: "Netscape",
+    			versionSearch: "Mozilla"
+    		}
+    	],
+    	dataOS : [
+    		{
+    			string: navigator.platform,
+    			subString: "Win",
+    			identity: "Windows"
+    		},
+    		{
+    			string: navigator.platform,
+    			subString: "Mac",
+    			identity: "Mac"
+    		},
+    		{
+    			   string: navigator.userAgent,
+    			   subString: "iPhone",
+    			   identity: "iPhone/iPod"
+    	    },
+    		{
+    			string: navigator.platform,
+    			subString: "Linux",
+    			identity: "Linux"
+    		}
+    	]
+
+    };
+    BrowserDetect.init();
+
+
+    // <!-- Code to prepare analytics data and send it to Keen IO -->
+
+    var recordEvent = function () {
+        // create an event as a JS object
+
+        var landing = {
+            page: "Exercise 3 Answers",
+            browser: {
+                name: BrowserDetect.browser,
+                version: BrowserDetect.version,
+                OS: BrowserDetect.OS
+            }
+        };
+        
+          
+        // add it to a Keen IO collection
+        Keen.addEvent("pageviews", landing,
+        function () {
+        },
+        function (e) {
+                 alert('no event sent to keen');
+        });
+        
+    };
+    
+    // <!-- Code to do stuff when the document is ready -->    
+
+      $(document).ready(function(){
+          recordEvent();
+      });
+    
+    
+   </script>
+   
+ </head>
+ <body>
+  <p><h1>Exercise 3 Answers</h1><p>
+
+ 
+  <p>Build an HTTPS query to extract a list of user names from the class using the select_unique function.</p>
+    
+        <ul>
+            <li> All names query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/select_unique?<span style="color:#33CCCC">event_collection=hottie_selections</span>&<span style="color:#009966">target_property=name</span>&api_key=cc548e247ee64394ae6f59137ef5dd88<br>
+        </ul>
+
+    <p>Add a filter to your query to extract only names of the people who picked zack.
+        
+        <ul>
+            <li> People who picked Zack query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/select_unique?<span style="color:#33CCCC">event_collection=hottie_selections</span>&<span style="color:#009966">target_property=name</span>&api_key=cc548e247ee64394ae6f59137ef5dd88&filters=%5B%7B%22property_name%22%3A%22hunk%22%2C%22operator%22%3A%22eq%22%2C%22property_value%22%3A%22zack%22%7D%5D<br>
+        </ul>        
+    
+    <p>Build a query to find the min and max ratings for the class.</p>
+        
+        <ul>
+            <li> Min Query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/<span style="color:#33CCCC">minimum</span>?event_collection=class_ratings&target_property=rating.value&api_key=cc548e247ee64394ae6f59137ef5dd88
+            <li> Max Query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/<span style="color:#33CCCC">maximum</span>?event_collection=class_ratings&target_property=rating.value&api_key=cc548e247ee64394ae6f59137ef5dd88
+    
+    
+  
+ </body>
+</html>
