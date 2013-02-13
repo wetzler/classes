@@ -6,7 +6,16 @@
   
   
   <link rel="stylesheet" type="text/css" href="style.css">
-
+ 
+  <style>
+  
+  body {
+    width:800px;
+    word-wrap: break-word;
+  };
+  
+  
+  </style>
 
   <!-- Code to configure Keen IO -->
 
@@ -187,26 +196,28 @@
    
  </head>
  <body>
-  <p><h1>Exercise 3 Answers</h1><p>
+     <p><h1>Exercise 3 Answers</h1><p>
 
  
-  <p>Build an HTTPS query to extract a list of user names from the class using the select_unique function.</p>
+     <p>1. Build an HTTPS query to extract a list of user names from the class using the select_unique function.</p>
     
-        <ul>
-            <li> All names query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/select_unique?<span style="color:#33CCCC">event_collection=hottie_selections</span>&<span style="color:#009966">target_property=name</span>&api_key=cc548e247ee64394ae6f59137ef5dd88<br>
-        </ul>
 
-    <p>Add a filter to your query to extract only names of the people who picked zack.
+     <p class="query">https://api.keen.io/3.0/projects/5119a923a136b071b6000000/queries/select_unique?<span style="color:#33CCCC">event_collection=hottie_selections</span>&<span style="color:#009966">target_property=name</span>&api_key=d03a1c87051f45c99c7ecbc38f6ebfc5</p>
+
+     <p>View in <a href="https://keen.io/project/5119a923a136b071b6000000/workbench#3.0/projects/5119a923a136b071b6000000/queries/select_unique?api_key=d03a1c87051f45c99c7ecbc38f6ebfc5&event_collection=hottie_selections&timezone=-28800&target_property=name">query builder.</a></p>
+
+     <p>2. Add a filter to your query to extract only names of the people who picked zack. View in <a href="https://keen.io/project/5119a923a136b071b6000000/workbench#3.0/projects/5119a923a136b071b6000000/queries/select_unique?api_key=d03a1c87051f45c99c7ecbc38f6ebfc5&event_collection=hottie_selections&filters=%5B%7B%22property_name%22%3A%22hunk%22%2C%22operator%22%3A%22eq%22%2C%22property_value%22%3A%22zack%22%7D%5D&timezone=-28800&target_property=name">query builder.</a></p>
         
-        <ul>
-            <li> People who picked Zack query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/select_unique?<span style="color:#33CCCC">event_collection=hottie_selections</span>&<span style="color:#009966">target_property=name</span>&api_key=cc548e247ee64394ae6f59137ef5dd88&filters=%5B%7B%22property_name%22%3A%22hunk%22%2C%22operator%22%3A%22eq%22%2C%22property_value%22%3A%22zack%22%7D%5D<br>
-        </ul>        
+     <p class="query">https://api.keen.io/3.0/projects/5119a923a136b071b6000000/queries/select_unique?<span style="color:#33CCCC">event_collection=hottie_selections</span>&<span style="color:#009966">target_property=name</span>&api_key=d03a1c87051f45c99c7ecbc38f6ebfc5&filters=%5B%7B%22property_name%22%3A%22hunk%22%2C%22operator%22%3A%22eq%22%2C%22property_value%22%3A%22zack%22%7D%5D</p>
+  
     
-    <p>Build a query to find the min and max ratings for the class.</p>
+    <p>3. Build a query to find the min and max ratings for the class.</p>
         
-        <ul>
-            <li> Min Query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/<span style="color:#33CCCC">minimum</span>?event_collection=class_ratings&target_property=rating.value&api_key=cc548e247ee64394ae6f59137ef5dd88
-            <li> Max Query: https://api.keen.io/3.0/projects/4fd6a054163d665aab000000/queries/<span style="color:#33CCCC">maximum</span>?event_collection=class_ratings&target_property=rating.value&api_key=cc548e247ee64394ae6f59137ef5dd88
+    <p>Min Query. View in <a href="https://keen.io/project/5119a923a136b071b6000000/workbench#3.0/projects/5119a923a136b071b6000000/queries/minimum?api_key=d03a1c87051f45c99c7ecbc38f6ebfc5&event_collection=class_ratings&timezone=-28800&target_property=rating.value">query builder</a></p> 
+    <p class="query">https://api.keen.io/3.0/projects/5119a923a136b071b6000000/queries/<span style="color:#33CCCC">minimum</span>?event_collection=class_ratings&target_property=rating.value&api_key=d03a1c87051f45c99c7ecbc38f6ebfc5</p>
+    
+    <p>Max Query. View in <a href="https://keen.io/project/5119a923a136b071b6000000/workbench#3.0/projects/5119a923a136b071b6000000/queries/maximum?api_key=d03a1c87051f45c99c7ecbc38f6ebfc5&event_collection=class_ratings&timezone=-28800&target_property=rating.value">query builder</a></p> 
+    <p class="query">https://api.keen.io/3.0/projects/5119a923a136b071b6000000/queries/<span style="color:#33CCCC">maximum</span>?event_collection=class_ratings&target_property=rating.value&api_key=d03a1c87051f45c99c7ecbc38f6ebfc5</p>
     
     
   
