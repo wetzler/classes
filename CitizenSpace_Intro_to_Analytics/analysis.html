@@ -102,10 +102,10 @@
     //  Which customers spent the most money?
     
     Keen.onChartsReady(function(){
-           var theSpenders = new Keen.Metric("purchases", {
-               analysisType: "sum",
-               targetProperty: "item.price",
-               groupBy: "user.name.full"
+        var theSpenders = new Keen.Metric("purchases", {
+           analysisType: "sum",
+           targetProperty: "item.price",
+           groupBy: "user.name.full"
         });
         
         
