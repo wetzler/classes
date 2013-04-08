@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Answers</title>
+  
+  <link rel="stylesheet" type="text/css" href="style.css">
+  
+  <!-- Code to configure Keen IO -->
+
+  <script type="text/javascript" src="https://keen_web_static.s3.amazonaws.com/code/keen-1.1.0.js"></script>
+   
+  <!-- Google JS library -->
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    
+  <!-- Google library loader --> 
+  <script type="text/javascript">
+      google.load("jquery", "1.4.2");
+  </script>
+  
+  <script>
+  // <!-- Keen IO Client Configurations -->     
+  Keen.configure("9b3ae08140574ae8a1bef270791af16c", "D1A84352DD81BEA4CD7CC3AE6132D9CD");
+
+      
+    // <!-- Code for Keen IO Charts -->   
+    
+    
+    // What's the total revenue from all purchases?
+    
+    Keen.onChartsReady(function(){
+           var purchaseEvents = new Keen.Metric("purchases", {
+            analysisType: "sum",
+            targetProperty: "item.price"
+        });
+        
+        
+        //Draw that Metric
+        purchaseEvents.draw(document.getElementById("total_rev"), {
+            label: "Sum of all purchases",
+        });
+        
+    });
+        
+    
+    // What's the total revenue from whistle purchases?
+    
+    Keen.onChartsReady(function(){
+           var whistlePurchaseEvents = new Keen.Metric("purchases", {
+            analysisType: "sum",
+            targetProperty: "item.price",
+            filters: [{
+                "property_name" : "item.name",
+                "operator" : "eq",
+                "property_value" : "whistle"
+            }]
+        });
+        
+        
+        //Draw that Metric
+        whistlePurchaseEvents.draw(document.getElementById("whistles_rev"), {
+            label: "Revenue from Whistle Purchases",
+        });
+    
+    });    
+        
+        
+    // How many unique customers made purchases?
+    
+    Keen.onChartsReady(function(){
+           var uniquePurchasers = new Keen.Metric("purchases", {
+               analysisType: "count_unique",
+               targetProperty: "user.name.full",
+        });
+        
+        
+        //Draw that Metric
+        uniquePurchasers.draw(document.getElementById("unique_customers"), {
+            label: "Number of Unique Purchasers",
+        });
+    
+    });        
+    
+    //  Which customers purchased the most products?
+    
+    Keen.onChartsReady(function(){
+           var thePurchasers = new Keen.Metric("purchases", {
+               analysisType: "count",
+               groupBy: "user.name.full"
+        });
+        
+        
+        //Draw that Metric
+        thePurchasers.draw(document.getElementById("customers_pie"), {
+            label: "Purchasers by # of items",
+        });
+    
+    });
+    
+    //  Which customers spent the most money?
+    
+    Keen.onChartsReady(function(){
+           var theSpenders = new Keen.Metric("purchases", {
+               analysisType: "sum",
+               targetProperty: "item.price",
+               groupBy: "user.name.full"
+        });
+        
+        
+        //Draw that Metric
+        theSpenders.draw(document.getElementById("customers_spent_pie"), {
+            label: "Purchasers by $ spent",
+        });
+    
+    });
+    
+    //  Which products are most popular?
+    
+    Keen.onChartsReady(function(){
+           var theItems = new Keen.Metric("purchases", {
+               analysisType: "count",
+               groupBy: "item.name"
+        });
+        
+        
+        //Draw that Metric
+        theItems.draw(document.getElementById("products_pie"), {
+            label: "Items by # times purchased",
+        });
+    
+    });
+    
+    
+   </script>
+   
+ </head>
+ <body>
+  <h1>Answers!</h1>
+
+
+  <p>What's the total revenue from all purchases?</p>
+  <div id="total_rev"></div>
+  <p>What's the total revenue from whistle purchases?</p>
+  <div id="whistles_rev"></div>
+  <p>How many unique customers made purchases?</p>
+  <div id="unique_customers"></div>  
+  <p>Which customers purchased the most products?</p>
+  <div id="customers_pie"></div>  
+  <p>Which customers spent the most money?</p>
+  <div id="customers_spent_pie"></div>
+  <p>What are the most popular products?</p>
+  <div id="products_pie"></div>  
+  
+  
+
+
+<p><a href="index.html"><-- Back to Course Page</a></p>
+      
+ </body>
+</html>
