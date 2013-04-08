@@ -9,6 +9,7 @@ a:visited {color:#a1bd68;}  /* visited link */
 a:hover {color:#54af62;}  /* mouse over link */
 a:active {color:#85db24;}  /* selected link */
 
+
 .query {
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
     color: #475b6b;
