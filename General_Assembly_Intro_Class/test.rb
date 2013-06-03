@@ -61,7 +61,7 @@ puts bulk_events
 # Send all the results to Keen
 ########################################
 
-bulk_results = {"purchases" => bulk_events}
+bulk_results = {collection => bulk_events}
                            
         # Required info to post events in Keen
         uri = URI.parse("http://api.keen.io/")
