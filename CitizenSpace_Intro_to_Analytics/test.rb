@@ -12,8 +12,8 @@ require 'date'
 # Here you can specify which Keen Event Collections should be used for the databed (where to send events) 
 # This only applies if you send the data to Keen. There is another option below to output the events to file. 
 collection = "purchased_items_test"
-projectID = "9b3ae08140574ae8a1bef270791af16c"
-# key = "34cd5a7b401a459982022a53129b0fc7"
+projectID = "518d6e0b38433141b8000003"
+key = "adeb825e465fdc90330b4a1aa8ed242782382733707f14493bd672d59b302668fbba025762c264c731621a18ab5ff1f964f35418c9f7a8008613fcd0a3e2d94fe99cf9a7ac7b280625d77103e457e15f77d804ddff244472e1c210964bcd1e11b7aed605063d32f627ff4f58b93859fc"
 
 
 
@@ -68,7 +68,7 @@ bulk_results = {"purchases" => bulk_events}
         http = Net::HTTP.new(uri.host, uri.port)
 
         bulk_results_post_request = Net::HTTP::Post.new("/3.0/projects/#{projectID}/events")
-        # bulk_results_post_request.add_field("Authorization", key) 
+        bulk_results_post_request.add_field("Authorization", key) 
         bulk_results_post_request.add_field("Content-Type", "application/json")
         
         # Convert the ruby hash to json format
