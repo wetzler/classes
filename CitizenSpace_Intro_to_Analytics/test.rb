@@ -11,7 +11,7 @@ require 'date'
 
 # Here you can specify which Keen Event Collections should be used for the databed (where to send events) 
 # This only applies if you send the data to Keen. There is another option below to output the events to file. 
-collection = "purchased_items_test"
+collection = "purchased_items"
 projectID = "518d6e0b38433141b8000003"
 key = "adeb825e465fdc90330b4a1aa8ed242782382733707f14493bd672d59b302668fbba025762c264c731621a18ab5ff1f964f35418c9f7a8008613fcd0a3e2d94fe99cf9a7ac7b280625d77103e457e15f77d804ddff244472e1c210964bcd1e11b7aed605063d32f627ff4f58b93859fc"
 
