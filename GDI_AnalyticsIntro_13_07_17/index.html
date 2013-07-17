@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+   typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);
+   b._i.push([a,e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+   mixpanel.init("f380c41141b70c7886576ebfeb707026");</script><!-- end Mixpanel -->
+   
+  <meta charset="utf-8" />
+  <title>Girl Develop It - Intro to Analytics</title>
+
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+ </head>
+
+  <script>
+  mixpanel.track("ViewClassPage", {
+      "page_title": "Girl Develop It - Intro to Analytics",
+      "3":"thi si sa value with underscores_",
+      "numeric property": 99
+  });
+  
+  mixpanel.track("A collection with spaces", {
+      "page_title": "Girl Develop It - Intro to Analytics",
+      "3":"thi si sa value with underscores_",
+      "numeric property": 99.9
+  });
+  
+  mixpanel.track("Turd Collection #3", {
+      "page_title": "Girl Develop It - Intro to Analytics",
+      "3":"thi si sa value with underscores_",
+      "egg":"blue"
+  });
+  </script>
+
+ <body>
+
+  <p><img src = "http://www.girldevelopit.com/assets/pink-logo-f9a26fcc82c561f925403822c5135a28.png"></p>
+  <h1>Intro to Analytics Class</h1>
+
+  <p>Download Course materials here!  <a href="Intro_to_event_data.key">keynote</a> | <a href="Intro_to_event_data.pdf">pdf</a></p>
+  <p> Twitter: <a href="https://twitter.com/michellewetzler" target="_blank">@michellewetzler</a>, <a href="https://twitter.com/gdisf" target="_blank">@gdisf (Girl Develop It SF)</a></p>
+    
+  <h2>Class Schedule</h2>
+  <p>7pm</p>
+  <li>Some context on big data & analytics</li>
+  <li>What is the goal of your app?</li>
+  <li>Event data</li>
+  <li>Common analytics methods</li> 
+  <p>8:15pm</p>
+  <li>Analyze some data</li>
+  <li>Free time for questions</li>
+  
+
+  <h2>Exercise</h2>
+  <p>Here is a sample dataset which includes Purchase events from a made up company.</p>
+  <p><a href="https://docs.google.com/file/d/0B5RCxVPqTJJWNkJESmd6dURxLTg/edit?usp=sharing">CSV Version</a> or <a href="https://docs.google.com/spreadsheet/ccc?key=0ApRCxVPqTJJWdGxkT3FMUUJSRjlxdU9NazNmQUpCOWc&usp=sharing"> Google Docs Version</a></p>
+
+  <h3>See if you can use Google Spreadsheet or Excel to answer these questions:</h3>
+  <ol>
+      <li>What's the total revenue from all purchases?</li>
+      <li>What's the total revenue from whistle purchases?</li>
+      <li>How many unique customers made purchases?</li>
+      <li>Which customers purchased the most products?</li>
+      <li>Which customers spent the most money?</li>        
+      <li>What are the most popular products?</li>
+          
+  <p><a href="analysis.html">Answer Key</a></p>        
+  
+  <p>Bonus Round</p>
+  <p>Use Keen IO analysis API to answer the questions. <a href="mailto:michelle@keen.io">Email Michelle</a> and she will setup an account quickly (or just shout out your email address at her).</p>
+  
+  
+ </body>
+</html>

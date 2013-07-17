@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Keen IO Dashboard</title>
+  
+  
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+
+  <!-- Keen JS library -->
+  <script type="text/javascript">
+      var Keen=Keen||{configure:function(a,b,c){this._pId=a;this._ak=b;this._op=c},addEvent:function(a,b,c,d){this._eq=this._eq||[];this._eq.push([a,b,c,d])},setGlobalProperties:function(a){this._gp=a},onChartsReady:function(a){this._ocrq=this._ocrq||[];this._ocrq.push(a)}};
+      (function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://":"http://")+"dc8na2hxrj29i.cloudfront.net/code/keen-2.0.0-min.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();
+
+      // Configure the Keen object with your Project Token and API Key
+      Keen.configure("51ad19dd3843315fe9000001", "2e1c37fb52d140733bfd59d35ec2aa043cd5b256ec79f05f237fc72ad23be6ae4b1c56eef953474bb1e97968115c467c056f92b671257b2f0bcfabb17b23ae4955b348458664e29029dd134a1f93833dd70c5c9e667cec5f4734b834668bc212adbfd2fd6b95beba596d191090081c7b");
+  </script>
+  
+  <script>
+
+
+  // <!-- Code to get data for Keen charts -->   
+  
+  // =============================================
+  // Stylistic Properties for the Charts & Filters
+  // =============================================
+  
+  var height = 300
+  var width = 700
+  var chartAreaHeight = "70%"
+  var chartAreaWidth = "85%"
+  var showLegend = false
+  var xAxisLabelAngle = "45"
+  var lineWidth = "2px"
+  var chartAreaLeft = "10%"
+
+  
+
+
+
+    Keen.onChartsReady(function() {
+      var series = new Keen.Series("pageviews", {
+        analysisType: "count",
+        timeframe: "this_14_days",
+        interval: "daily"
+      });
+  
+  
+      //Create a LineChart visualization for that Series.
+      var myLineChart = new Keen.LineChart(series, {
+          // title: "Pageviews each day (past 2 weeks)",
+          lineWidth: lineWidth,
+          showLegend: showLegend, 
+          xAxisLabelAngle: xAxisLabelAngle,
+          chartAreaHeight: chartAreaHeight,
+          chartAreaWidth: chartAreaWidth,
+          chartAreaLeft: chartAreaLeft,
+          borderRadius: "0px"
+      });
+  
+      myLineChart.draw(document.getElementById("pg_short"));
+    });
+  
+    Keen.onChartsReady(function() {
+      var series = new Keen.Series("pageviews", {
+        analysisType: "count",
+        timeframe: "this_12_weeks",
+        interval: "weekly"
+      });
+  
+  
+      //Create a LineChart visualization for that Series.
+      var myLineChart = new Keen.LineChart(series, {
+          // title: "Pageviews each week (past 12 weeks)",
+          lineWidth: lineWidth,
+          showLegend: showLegend, 
+          xAxisLabelAngle: xAxisLabelAngle,
+          chartAreaHeight: chartAreaHeight,
+          chartAreaWidth: chartAreaWidth,
+          chartAreaLeft: chartAreaLeft,
+          borderRadius: "0px"
+      });
+  
+  
+      myLineChart.draw(document.getElementById("pg_long"));
+    });
+  
+  // ===================================
+  // Analytics for New Orgs
+  // ===================================
+  
+  Keen.onChartsReady(function(){
+
+      //Create a Series containing our total number of new Orgs for each of the previous 7 days.
+      var mySeries = new Keen.Series("create_organization", {
+          analysisType: "count",
+          timeframe: "this_14_days",
+          interval: "daily",
+      });
+      
+      
+      //Create a LineChart visualization for that Series.
+      var myLineChart = new Keen.LineChart(mySeries, {
+          // title: "new orgs past 2 weeks (by day)",
+          lineWidth: lineWidth,
+          showLegend: showLegend, 
+          xAxisLabelAngle: xAxisLabelAngle,
+          chartAreaHeight: chartAreaHeight,
+          chartAreaWidth: chartAreaWidth,
+          chartAreaLeft: chartAreaLeft,
+          borderRadius: "0px"
+      });
+      
+      //Draw the visualization into a div
+      myLineChart.draw(document.getElementById("orgs_short"));
+      
+  });
+  
+  Keen.onChartsReady(function(){
+
+      //Create a Series containing our total number of new Orgs for each of the previous 7 days.
+      var mySeries = new Keen.Series("create_organization", {
+          analysisType: "count",
+          timeframe: "this_12_weeks",
+          interval: "weekly"
+      });
+      
+      
+      //Create a LineChart visualization for that Series.
+      var myLineChart = new Keen.LineChart(mySeries, {
+          // title: "new orgs past 3 months (by week)",
+          lineWidth: lineWidth,
+          showLegend: showLegend, 
+          xAxisLabelAngle: xAxisLabelAngle,
+          chartAreaHeight: chartAreaHeight,
+          chartAreaWidth: chartAreaWidth,
+          chartAreaLeft: chartAreaLeft,
+          color: "#088da5",
+      });
+      
+      //Draw the visualization into a div
+      myLineChart.draw(document.getElementById("orgs_long"));
+      
+  });
+ 
+  
+  Keen.onChartsReady(function(){
+
+      //Create a Metric containing our total number of logins.
+      var myMetric = new Keen.Metric("create_organization", {
+          analysisType: "count"
+      });
+      //Create a Number visualization for that metric.
+      var myNumberVisualization = new Keen.Number(myMetric, {
+          height: "200px",
+          width: "300px",
+          label: "Total Orgs All Time",
+      });
+      
+      //Draw the visualization in a div
+      Keen.onChartsReady(function(){
+          myNumberVisualization.draw(document.getElementById("orgs_total"));
+      });
+  });
+    
+  D1A84352DD81BEA4CD7CC3AE6132D9CD
+    
+   
+    </script>
+    
+    
+    
+    
+    
+   </script>
+   
+ </head>
+ <body>
+     
+     <table border="0" margin="10px">
+     <tr>
+     <td><h2>Page Views (daily)</h2><div id="pg_short"></td>
+     <td><h2>Page Views (weekly)</h2><div id="pg_long"></td>
+     <!-- <td><div id="paying"><h2>Paying Orgs</h2></div> </td>    -->   
+     </tr>
+     </table>
+     
+ 
+    <h2>New Orgs</h2>
+    <table border="0" margin="10px">
+    <tr>
+    <td><div id="orgs_short"></td>
+    <td><div id="orgs_long"></td>
+    <td><div id="orgs_total"></td>
+    </tr>
+    </table>
+    
+    <h2>Unique Orgs Sending Data</h2>
+    <table border="0" margin="10px">
+    <tr>
+    <td><div id="eng_orgs_short_events"></td>
+    <td><div id="eng_orgs_long_events"></td>
+    <td><div id="eng_orgs_total_events"></td>      
+    </tr>
+    </table>
+
+    <h2>Unique Orgs Performing Analysis</h2>
+    <table border="0" margin="10px">
+    <tr>
+    <td><div id="eng_orgs_short"></td>
+    <td><div id="eng_orgs_long"></td>
+    <td><div id="eng_orgs_total"></td>      
+    </tr>
+    </table>
+
+    <h2>Analysis Calls</h2>
+    <table border="0" margin="10px">
+    <tr>
+    <td><div id="analysis_calls_short"></td>
+    <td><div id="analysis_calls_long"></td>
+    <td><div id="analysis_total"></td>
+    </tr>
+    </table>
+  
+  <h2>Events Added</h2>
+  <table border="0" margin="10px">
+  <tr>
+  <td><div id="events_sent_short"></td>
+  <td><div id="events_sent_long"></td>
+  <td><div id="events_total"></td>
+  </tr>
+  </table>
+
+
+  
+ </body>
+</html>
