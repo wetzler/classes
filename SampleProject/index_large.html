@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sample Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- <link href="css/bootstrap-responsive.css" rel="stylesheet"> -->
+    <link href="css/dashboard.css" rel="stylesheet">
+
+    <script>
+    
+    ////////////////////////////////////
+    //---------------------------------
+    // Dashboard Configurations
+    //---------------------------------
+    ///////////////////////////////////
+    //---------------------------------      
+
+    //  See https://keen.io/docs/data-analysis/timeframe/ for all the timeframe options
+
+    var timeframe = "this_year"
+    // var timeframe = "this_30_days"
+    // var timeframe = "this_24_hours"
+    // var timeframe = "this_48_hours";
+    // var timeframe = "last_60_minutes";   
+    // var timeframe = "last_24_hours";      
+    // var timeframe = "last_48_hours";
+
+
+    // -------- Sample Test Project Info ------------------------- 
+    // var impressionsCollectionName = "impressions_test_small"
+    // var clicksCollectionName = "clicks_test_small"
+    // var conversionsCollectionName = "conversions_test_small"
+    // var projectId = "51a79822897a2c4bf9000000"
+    // var readKey = "f4ea72f9d7ec08e57f95bfeffd4f153a4638a9bdd26c77d731a04c336909aa6cf85bf3aa0d5f5eae83b4789dd0966883af388d09dc47dc72dab6788e53fb503db552722f6fd9576f3af76d45a1d86c5fa231746837ca6cbc1f1c7c9f163928c6851b0bfc90123bb825eda035022faea0";
+    //           
+
+    // -------- Perf Test Project Info ------------------------- 
+    var impressionsCollectionName = "impressions_test"
+    var clicksCollectionName = "clicks_test"
+    var conversionsCollectionName = "conversions_test"
+    var projectId = "51a79822897a2c4bf9000000"
+    var readKey = "f4ea72f9d7ec08e57f95bfeffd4f153a4638a9bdd26c77d731a04c336909aa6cf85bf3aa0d5f5eae83b4789dd0966883af388d09dc47dc72dab6788e53fb503db552722f6fd9576f3af76d45a1d86c5fa231746837ca6cbc1f1c7c9f163928c6851b0bfc90123bb825eda035022faea0";
+
+
+    </script>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span12">          
+          <div class="page-header">
+            <h1>Sample Dashboard</h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">    
+        <div class="span6">
+          <h3>All Campaigns <small><span class="timeframeDisplay"></span></small></h3>
+          <table class="summaryTable table table-bordered table-rounded table-striped">
+            <tr class="impressions">
+              <td class="metric">
+                <span class="number"></span>
+              </td>
+              <td class="metricLabel">
+                Impressions
+              </td>
+              <td class="metaCalculation">
+              </td>
+            </tr>
+            <tr class="clicks">
+              <td class="metric">
+                <span class="number"></span>
+              </td>
+              <td class="metricLabel">
+                Clicks
+              </td>
+              <td class="metaCalculation">
+                <span class="overallClickPercent"></span>% Conversion to Click
+              </td>
+            </tr>
+            <tr class="conversions">
+              <td class="metric">
+                <span class="number"></span>
+              </td>
+              <td class="metricLabel">
+                Conversions
+              </td>
+              <td class="metaCalculation">
+                <span class="overallConversionPercent"></span>% Conversion from Click
+              </td>
+            </tr>
+            <tr class="revenue">
+              <td class="metric">
+                $<span class="number"></span>
+              </td>
+              <td class="metricLabel">
+                Revenue
+              </td>
+              <td class="metaCalculation">
+                $<span class="overallRevenuePerOneK"></span> Per Thousand Impressions
+              </td>
+            </tr>
+          </table>          
+        </div>
+        <div class="span6">
+          <h3>Revenue By Campaign <small><span class="timeframeDisplay"></span></small></h3>
+            <div id="revenuePie"></div>
+        </div>
+      </div>
+    
+      <div class="row">
+        <div class="span12">
+          <h3>Breakdown by Campaign <small><span class="timeframeDisplay"></span></small></h3>
+          <table class="campaignTable table table-bordered table-rounded table-striped">
+            <tr>
+              <th class="campaignId">Campaign ID</th>
+              <th>Impressions</th>
+              <!-- <th>Cost</th>               --> <!-- Enable this once we have Cost data on events -->
+              <th>Clicks</th>
+              <th>Click %</th>
+              <th>Conversions</th>
+              <th>Conversion %</th>
+              <th>Revenue</th>
+              <th>Revenue / 1k Impressions</th>
+            </tr>
+          </table>
+        </div>
+      </div>      
+    </div>
+      
+
+    
+    <script type="text/javascript">   
+      
+      var Keen=Keen||{configure:function(e){this._cf=e},addEvent:function(e,t,n,i){this._eq=this._eq||[],this._eq.push([e,t,n,i])},setGlobalProperties:function(e){this._gp=e},onChartsReady:function(e){this._ocrq=this._ocrq||[],this._ocrq.push(e)}};(function(){var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src=("https:"==document.location.protocol?"https://":"http://")+"dc8na2hxrj29i.cloudfront.net/code/keen-2.1.0-min.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();
+
+      //Configure the client to work with my project.
+      Keen.configure({
+        projectId: projectId,
+        readKey: readKey
+      });
+      
+      var totalImpressions = null
+      var totalClicks = null
+      var totalConversions = null
+      var totalRevenue = null
+      var totalCost = null
+
+      var totalImpressionsLoaded = false   
+      var totalClicksLoaded = false
+      var totalConversionsLoaded = false
+      var totalRevenueLoaded = false
+      var totalCostLoaded = false
+      
+      var impressionsLoadedByCampaign = false  
+      var clicksLoadedByCampaign = false
+      var conversionsLoadedByCampaign = false
+      var revenueLoadedByCampaign = false
+      var costLoadedByCampaign = false
+      
+      // a hash to store results by campaign ID for all the queries and calculations
+      var h = {};
+              
+      Keen.onChartsReady(function(){
+      
+      $(".timeframeDisplay").append(timeframe)
+                
+        ///////////////
+        // Conversions 
+        ///////////////////////////////////////////////////////////
+        // Total Number of Conversions in the past 24 hours 
+        var totalConversionsQuery = new Keen.Metric(conversionsCollectionName, {
+            analysisType: "count",
+            timeframe: timeframe
+        });
+    
+        //Get the result of the query and output the data to the screen
+        totalConversionsQuery.getResponse(function(response){
+          totalConversions = response.result
+          totalConversionsLoaded = true
+          $(".conversions .number").append(totalConversions)
+        
+          if (totalClicksLoaded == true && totalConversionsLoaded == true) {            
+            var overallConversionPercent = parseInt(totalConversions) * 100 / parseInt(totalClicks)
+            $(".overallConversionPercent").append(overallConversionPercent.toFixed(2))
+          }
+        })
+
+        ///////////////
+        // Revenue  
+        ///////////////////////////////////////////////////////////
+        // Total Revenue in the past 24 hours 
+        var totalRevenueQuery = new Keen.Metric(conversionsCollectionName, {
+            analysisType: "sum",
+            targetProperty:"revenue",
+            timeframe: timeframe
+        })
+    
+        //Get the result of the query and output the data to the screen
+        totalRevenueQuery.getResponse(function(response){
+          totalRevenue = response.result 
+          totalRevenueLoaded = true
+          $(".revenue .number").append(totalRevenue.toFixed(0))
+        
+          if (totalImpressionsLoaded == true && totalRevenueLoaded == true) {            
+            var overallRevenuePerOneK = (totalRevenue * 1000 / totalImpressions)
+            $(".overallRevenuePerOneK").append(overallRevenuePerOneK.toFixed(2))
+          }
+        }) 
+
+        ///////////////
+        // Clicks
+        ///////////////////////////////////////////////////////////
+        var clicksQuery = new Keen.Metric(clicksCollectionName, {
+            analysisType: "count",
+            timeframe: timeframe
+        });
+        
+        clicksQuery.getResponse(function(response){
+          totalClicks = response.result 
+          totalClicksLoaded = true
+          $(".clicks .number").append(totalClicks);
+          
+          if (totalImpressionsLoaded == true && totalClicksLoaded == true) {
+          var overallClickPercent = (parseInt(totalClicks) * 100 / parseInt(totalImpressions));
+          $(".overallClickPercent").append(overallClickPercent.toFixed(2));
+          }
+            
+          if (totalClicksLoaded == true && totalConversionsLoaded == true) {            
+          var overallConversionPercent = parseInt(totalConversions) * 100 / parseInt(totalClicks);
+          $(".overallConversionPercent").append(overallConversionPercent.toFixed(2));
+          }
+        });         
+      
+        ///////////////
+        // Impressions
+        ///////////////////////////////////////////////////////////
+        // Total Number of Impressions in the past 24 hours 
+        var impressionsQuery = new Keen.Metric(impressionsCollectionName, {
+            analysisType: "count",
+            timeframe: timeframe
+        })
+                    
+        // Get the result of the query and output the data to the screen
+        impressionsQuery.getResponse(function(response){
+          totalImpressions = response.result 
+          totalImpressionsLoaded = true
+          $(".impressions .number").append(totalImpressions)
+        
+          if (totalImpressionsLoaded == true && totalClicksLoaded == true) {
+            var overallClickPercent = (parseInt(totalClicks) * 100 / parseInt(totalImpressions))
+            $(".overallClickPercent").append(overallClickPercent.toFixed(2))
+          }
+
+          if (totalImpressionsLoaded == true && totalRevenueLoaded == true) {            
+            var overallRevenuePerOneK = (totalRevenue * 1000 / totalImpressions)
+            $(".overallRevenuePerOneK").append(overallRevenuePerOneK.toFixed(2))
+          }
+        })
+       
+                 
+      
+        ///////////////////////////////////////////////////////////
+        // Analytics by Campaign ID
+        ///////////////////////////////////////////////////////////
+      
+
+      
+        ///////////////////////////////////////////////////////////
+        // Build Query for number of Impressions broken out by Campaign Id
+        var impressionsByCampaignQuery = new Keen.Metric(impressionsCollectionName, {
+            analysisType: "count",
+            groupBy: "campaign_id",              
+            timeframe: timeframe
+        })            
+        impressionsByCampaignQuery.getResponse(function(response){
+            processResults(response.result, "impressions")
+            impressionsLoadedByCampaign = true
+            processMetaCalculations("impressions")      
+        })
+      
+        ///////////////////////////////////////////////////////////                        
+        // Get Revenue broken out by Campaign Id
+        var revenueByCampaignQuery = new Keen.Metric(conversionsCollectionName, {
+          analysisType: "sum",
+          targetProperty: "revenue",
+          groupBy: "campaign_id",              
+          timeframe: timeframe
+        })
+        revenueByCampaignQuery.getResponse(function(response){
+          processResults(response.result, "revenue")
+          revenueLoadedByCampaign = true
+          processMetaCalculations("revenue")              
+        })
+           
+        /////////////////////////////////////////////////////////
+        // Get the number of Conversions broken out by Campaign Id
+        var conversionsByCampaignQuery = new Keen.Metric(conversionsCollectionName, {
+          analysisType: "count",
+          groupBy: "campaign_id",              
+          timeframe: timeframe
+        })
+        conversionsByCampaignQuery.getResponse(function(response){
+          processResults(response.result, "conversions")
+          conversionsLoadedByCampaign = true   
+          processMetaCalculations("conversions")              
+        })
+
+        /////////////////////////////////////////////////////////
+        // Get Cost broken out by Campaign Id
+        // var conversionsByCampaignQuery = new Keen.Metric(impressionsCollectionName, {
+        //   analysisType: "sum",
+        //   targetProperty: "cost",              
+        //   timeframe: timeframe
+        // });
+        // conversionsByCampaignQuery.getResponse(function(response){
+        //   processResults(response.result, "cost")
+        //   costLoadedByCampaign = true   
+        //   processMetaCalculations("cost")              
+        // })                 
+
+        ///////////////////////////////////////////////////////////
+        // Get the number of Clicks broken out by Campaign Id
+        var clicksByCampaignQuery = new Keen.Metric(clicksCollectionName, {
+          analysisType: "count",
+          groupBy: "campaign_id",              
+          timeframe: timeframe
+        });
+        clicksByCampaignQuery.getResponse(function(response){
+           processResults(response.result, "clicks")  
+           clicksLoadedByCampaign = true;
+           processMetaCalculations("clicks")
+        });
+
+  
+      // For the pie chart
+      ///////////////////////////////////////////////////////////                        
+      // Get Revenue broken out by Campaign Id
+      var revenueByCampaignQuery = new Keen.Metric(conversionsCollectionName, {
+        analysisType: "sum",
+        targetProperty: "revenue",
+        groupBy: "campaign_id",              
+        timeframe: timeframe
+      })
+
+      //Draw a pie chart in a <div/> 
+      var myPieChart = new Keen.PieChart(revenueByCampaignQuery, {
+        height: 230,
+        width:  460,
+        backgroundColor: "transparent",
+       })
+       myPieChart.draw(document.getElementById("revenuePie"));
+      
+    })
+      
+    function processResults(queryResults, queryType) {
+       var campaignCount = queryResults.length
+       for (i=0; i<campaignCount; i++) {
+         resultObject = queryResults[i];
+         campaignId = resultObject["campaign_id"];
+         value = resultObject["result"];
+
+         if (h[campaignId] == undefined) {
+           // create a new hash if a campaign doesn't exist yet
+           h[campaignId] = {}; 
+           // create a new table row if a campaign doesn't exist yet
+           $(".campaignTable tbody") .append('<tr class="'+campaignId+'"><td class="campaignId">'+campaignId+'</td><td class="impressions"></td></td><td class="clicks"><td class="clickPercent"></td><td class="conversions"></td><td class="conversionPercent"></td><td class="revenue"></td><td class="revenuePerOneK"></td></tr>')  
+           // This version of the row includes a column for "Cost" which we don't have in the data model yet.
+           // $(".campaignTable tbody") .append('<tr class="'+campaignId+'"><td class="campaignId">'+campaignId+'</td><td class="impressions"></td><td class="cost"></td><td class="clicks"><td class="clickPercent"></td><td class="conversions"></td><td class="conversionPercent"></td><td class="revenue"></td><td class="revenuePerOneK"></td></tr>')  
+         };          
+         // add the results of the query to to the results hash  
+         h[campaignId][queryType] = value; 
+         if (queryType == "revenue") {
+           value = "$"+(value.toFixed(2))
+         }
+         // print the value to the appropriate column in the table
+         $(".campaignTable ."+campaignId+" ."+queryType+"") .append(value)   
+       }
+    };            
+      
+    function processMetaCalculations(queryCompleted){
+      if (queryCompleted == "impressions") {
+        if (clicksLoadedByCampaign == true){
+          $.each(h, function(campaign, values){
+            values.clickPercent = values.clicks * 100 / values.impressions
+            $(".campaignTable ."+campaign+" .clickPercent") .append(values.clickPercent.toFixed(2)+"%")
+          })
+        }
+        if (revenueLoadedByCampaign == true) {
+          $.each(h, function(campaign, values){
+            values.revenuePerOneK = values.revenue * 1000 / values.impressions
+            $(".campaignTable ."+campaign+" .revenuePerOneK") .append("$"+values.revenuePerOneK.toFixed(2))
+          })
+        }
+      }
+      if (queryCompleted == "clicks") {
+        if (impressionsLoadedByCampaign == true){
+          $.each(h, function(campaign, values){
+            values.clickPercent = values.clicks * 100 / values.impressions
+             $(".campaignTable ."+campaign+" .clickPercent") .append(values.clickPercent.toFixed(2)+"%")
+          })
+        }
+        if (conversionsLoadedByCampaign == true){
+          $.each(h, function(campaign, values){
+            values.conversionPercent = values.conversions * 100 / values.clicks
+            $(".campaignTable ."+campaign+" .conversionPercent") .append(values.conversionPercent.toFixed(2)+"%")
+          })
+        }
+      }
+      if (queryCompleted == "conversions") {
+        if (clicksLoadedByCampaign == true){
+          $.each(h, function(campaign, values){
+            values.conversionPercent = values.conversions * 100 / values.clicks
+            $(".campaignTable ."+campaign+" .conversionPercent") .append(values.conversionPercent.toFixed(2)+"%")
+          })
+        }
+      }
+      if (queryCompleted == "revenue") {
+        if (impressionsLoadedByCampaign == true){
+          $.each(h, function(campaign, values){
+            values.revenuePerOneK = values.revenue * 1000 / values.impressions
+            $(".campaignTable ."+campaign+" .revenuePerOneK") .append("$"+values.revenuePerOneK.toFixed(2))
+          })
+        }
+      }       
+    }
+  
+    </script>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-2.0.1.js"></script>
+    
+  </body>
+</html>
