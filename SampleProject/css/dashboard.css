@@ -1,0 +1,26 @@
+body {
+    padding-bottom: 120px;
+}
+.summaryTable {
+}
+
+.summaryTable .metric {
+  text-align: right;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.summaryTable .metaCalculation span {
+  font-weight: bold;
+}
+
+.campaignTable th, .campaignTable td {
+  text-align: right;
+}
+.campaignTable .campaignId {
+  text-align: left;
+}
+
+#revenuePie {
+    margin-top: -38px;
+}
